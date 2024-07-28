@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Google API</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> <!-- jQuery library -->
+  <style>
+    body {
+      background-color: #f0f0f0; /* Set the background color to light gray */
+    }
+    .navbar {
+      background-color: black; 
+      transition: background-color 0.3s ease;
+    }
+    #details {
+      text-align: left; /* Align text to the left */
+      font-family: Verdana Pro, sans-serif; /* Set font to Verdana */
+      color: black; /* Set initial color */
+      padding-left: 2px; /* Move text 2px away from left side */
+    }
+    #details p {
+      font-family: Verdana Pro, sans-serif; /* Set font to Verdana */
+    }
+    .card {
+      transition: box-shadow 0.2s ease; /* Add transition effect to card */
+      box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2); /* Set initial box shadow */
+    }
+    .navbar-brand img {
+      width: 39px; /* Set the width of the logo */
+      height: 36px; /* Set the height of the logo */
+    }
+  </style>
+</head>
+<body>
+  <nav class="navbar navbar-dark bg-dark">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">
+        <img src="https://w7.pngwing.com/pngs/321/306/png-transparent-google-maps-google-developers-application-programming-interface-location-places-map-android-logos-thumbnail.png" alt="Logo" width="30" height="24" class="d-inline-block align-text-top">
+        Google API
+      </a>
+    </div>
+  </nav>
+  <br>
+  <br>
+  <center>
+    <div class="card border-secondary mb-3" style="max-width: 60rem;">
+      <div class="card-header">Google API</div>
+      <div class="card-body">
+        <form id="searchForm" class="d-flex" role="search">
+          <input id="searchInput" class="form-control me-2" type="search" placeholder="Mail,address or location" aria-label="Search">
+          <button id="searchButton" class="btn btn-outline-success" type="submit">Search</button>
+        </form>
+        <br>
+        <p class="text-left" id="details"></p>
+      </div>
+    </div>
+  </center>
+  
+  <script>
+    $(document).ready(function(){
+      $('#searchForm').submit(function(event){
+        event.preventDefault(); // Prevent the default form submission
+        var userInput = $('#searchInput').val(); // Get the input value
+        
+        // Send the input value to the Python script using AJAX
+        $.ajax({
+          type: 'POST',
+          url: '/get_details', // Update the URL
+          data: { user_input: userInput }, // Send the input as data
+          success: function(response){
+            // Handle the response from the Python script
+            $('#details').html(response); // Update details section with response
+          },
+          error: function(xhr, status, error){
+            // Handle errors
+            console.error(error);
+          }
+        });
+      });
+    });
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
+</body>
+</html>
